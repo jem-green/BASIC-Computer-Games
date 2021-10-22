@@ -147,9 +147,156 @@ Executes a loop.  The test for ending the loop is made after the loop has been e
 10 FOR J=1 TO 3
 20 PRINT ?HI?
 30 NEXT J
-will print ?HI? three times, and J will equal 4 when the loop is finished.
+       will print ?HI? three times, and J will equal 4 when the loop is finished.
 20 FOR I=1 TO 30
 20 FOR J=22 TO N STEP 3
+
+GOSUB n
+Branch to subroutine n.
+	20 GOSUB 200
+
+GOTO n
+	Branch to statement n.
+		20 GOTO 50
+
+IF?THEN n
+	Branch to statement n if condition is true.
+		20 IF A>1 THEN 50
+
+IF?THEN stmts
+	Executes statements if condition is true.  Drops to next numbered line if false.
+		20 IF Z<5 THEN A=1:PRINT B
+
+IF?THEN n ELSE m
+	Branch to n if true or to m if not true.
+		20 IF X=Y THEN 50 ELSE 90
+
+IF?THEN stmts
+ELSE stmts
+	Does statements after THEN if true, stmts after ELSE if false.
+		20 IF Z>R THEN X=1 ELSE X=2
+
+INPUT
+	Requests data from keyboard.  The prompt string is optional.
+		20 INPUT N
+		20 INPUT ?YES OR NO?:Z$
+
+LET
+	Assigns value of expression to variable.  The word LET is optional.
+		20 LET A=1
+
+NEXT
+	Marks end of FOR loop.
+		20 NEXT J
+
+ON m GOSUB
+	Branch to mth subroutine.
+		20 ON X GOSUB 100,200
+
+ON m GOTO
+	Branch to mth line no..  In these statements, m must be an integer starting at 1 and increasing by 1.
+		20 ON Y GOTO 50,80,120
+
+PRINT
+	Displays strings, constants, and variables.  Calculations can be done within a PRINT statement.
+		20 PRINT ?A=?;A
+		20 PRINT Z$;10*A+B
+
+READ
+	Moves values of DATA into variables.
+		20 READ N;X1;A$
+
+REM
+	Remark.  Does not execute.
+		20 REMARKABLE PROGRAM
+
+RESTORE
+	Resets DATA pointer to first item in list.
+		20 RESTORE
+
+RETURN
+	Go to statement following last GOSUB.
+		20 RETURN
+
+STOP
+	Terminates program.
+20 STOP
+
+
+
+Functions
+
+ABS (X)
+	Absolute value.
+
+ASC(X$)
+	Returns the ASCII value of the first character in the string argument.  ASC(
+?A?) is 65, ASC(?B?) is 66, etc.
+
+ATN(X)
+	Arctangent.
+
+CHR$(X)
+	Converts ASCII value to a character string.  CHR$(65) is ?A?, etc..  CHR$(7) is a bell ring.
+
+COS(X)
+	Cosine.
+
+EXP(X)
+	Value of e raised to the X power.
+
+INT(X)
+	Integer function.
+
+LEFT$(X$,Y)
+	The left most Y characters in X$.
+
+LEN(X$)
+	Number of characters in X$.
+
+LOG(X)
+	Log of x to the base of e.
+
+MID$(X$,Y,Z)
+	Takes Z characters from X$ starting at position Y.
+
+RND(1)
+	Returns a random number between 0 and 1.
+
+RIGHT$(X$,Y)
+	The rightmost Y characters in X$.
+
+SGN(X)
+	Sign function.  Returns -1 if X is negative, 0 if x is zero, 1 if x is positive.
+SIN(X)
+	Sine.
+SQR(X)
+	Square root.
+
+STR$(X)
+Converts X to a string of decimal digits, for example if X was 8.45 it would be converted to the string ?8.45?.
+
+TAB(X)
+	Spaces over to position X on the terminal.
+	
+TAN(X)
+	Tangent.
+
+VAL(X$)
+	Returns the numerical value of the string of digits in X$.  Opposite of STR$(X).
+
+	In Microsoft (Altair) BASIC, any expression may be evaluated as either true or false.  A true condition will return a value of -1, and a false condition 0.  Thus if we say LET Q=-(X=Y), Q=1 if X=Y and Q=0 if X=Y.  Tis logical evaluation of expressions is only used in the Hexaspawn game in the user-defined function and with a little ingenuity could be replaced with a look-up table.  A few other games use the logical AND and OR operators, which work in a straightforward manner.
+	The programs in this book were printed on a printer that uses a caret (^) to indicate exponentiation.  This is equivalent to an up arrow.  Incidentally, exponentiation and taking roots are among the least accurate functions on small computers.  For example, try this program.
+10 INPUT N
+20 I=SQR(SQR(N))
+30 J=(I12)12
+40 PRINT N,J
+50 GOTO 10
+	Chances are good that N and J will not be the same 25% or more of the time.  You can improve the accuracy by substituting J*J for J squared or J*J*J for J cubed.
+	Microsoft Basic permits more than one statement on a line when the statements are separated by a  colon(?).  As noted above, in an IF?THEN statement, if the condition is false, control drops to the next number line, not to the next statement on the same line.
+	This means that for TI and other computers that do not permit multiple statements on one line, you will have to insert additional lines.  This may be difficult when line numbers are close together.  One easy solution is to add a zero to all line numbers, but you must remember to do that in IF?THEN, GOTO and GOSUB statements as well as changing all the numbered lines.
+	The random function can be especially irksome as it is one that differs widely on different versions of Basic.  In Microsoft Basic, RND(1) returns a value between 0 and 0.999999.  This is the convention used in all programs in this book.  On some computers, you may have to use RND(0), and on others just RND.
+
 
 
 Conversion to other Basics
@@ -164,4 +311,80 @@ SWTPC 6800 BASIC:  Versions 2.0 and above of this BASIC should be nearly compati
 TDL ZAPPLE 8K and 12K BASIC:  All the programs are executable in both TDL BASICs.  However TDL ZAPPLE BASIC has a RANDOMIZE verb which should be inserted at the beginning of a program to get true pseudorandom numbers.
 Sol BASIC:  The programs will work directly in SOL Extended Basic.  Many programs will run in 5K Basic but the majority will require considerable conversion.
 PET BASIC:  Commodore PETW BASIC is identical to the BASIC used in this book.  Thus, all the games will run without any conversion.
+Cromemco 16K Extended BASIC:  Cromemco BASIC allows multiple statements, but certain statements must be the last statement on a line, so some rearrangement may be necessary.  Two-dimensional arrays must be dimensioned explicitly (there is no default to a 10 by 10 dimension).  Also, strings in Cromemco BASIC are implemented like HP BASIC, not Altair BASIC.
+Ohio Scientific BASIC:  Most programs will run directly on Challenger 2P and larger systems.  The 32-characters per line display of the Challenger 1P and superboard will require conversion o the program output routines.
+IMSAI 8K BASIC:  Programs are executable with little or no modification.
+ North Star Disk BASIC:  North Star BASIC has character strings like HP BASIC, so some conversion will be required.  Also note that the function SQRT is used in place of SQR.
+PolyMorphic 11K BASIC:  The multiple statement separator is a backslash (/), not the colon.  Like North Star BASIC, SQRT is used instead of SQR.  In Poly BASIC you?re not allowed to exit a FOR loop prematurely, except by using the EXIT verb.  So whenever you see an IF?THEN out of a FOR loop, use the EXIT verb.  Also note that in order to get random numbers, RND must be used with a ?see? value between 0 and 1, which determines at what point in the sequence of random numbers the RND function starts.  The see value is usually based on the time of day.  After initializing the RMD function, use RND(0) to get random numbers.
+BASIC-E: (runs under CP/M Disk Operating System_.  All arrays must be dimensioned (there is no default).  The RANDOMIZE verb should be used a the beginning of the program, to get random numbers.  Also, multiple statements are not allowed, so conversion to several single statement lines will be necessary.
+
+
+
+
+To The Games
+
+
+Acey Ducey
+
+       This is a simulation of the Acey Ducey card game.  In the game, thee dealer (the computer) deals two cards face up.  You have an option to bet or not to bet depending on whether or not you feel the next card dealt will have a value between the first two.
+	Your initialmoney (Q) is set to $100, you may alter Statement 110 if you want to start with more or less than $100.  The game keeps going on until you lose all your money or interrupt the program.
+	The original program author was Bill Palmby of Prairie View, Illinois.
+
+ACEY DUCEY CARD GAME
+CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY
+
+ACEY DUCEY IS PLAYED INT THE FOLLOWING MANNER
+THE DEALER (COMPUTER) DEALS TWO CARDS FACE UP
+UYOU HAVCE AN OPTION TO BET OR NOT BET DEPENDING
+ON WHETHER OR NOT YOU FEEL THE CARD WILL HAVE
+A VALUE BETWEEN THE FIRST TWO.
+IF YOU DO NOT WANT TO BET, INPUT A 0.
+YOU NOW HAVE  100  DOLLARS.
+
+HERE ARE YOUR NEXT TWO CARDS
+ 2
+ 9
+
+WHAT IS YOUR BET? 25
+QUEEN
+SORRY, YOU LOSE
+YOU NOW HAVE  75  DOLLARS
+
+HERE ARE YOUR NEXT TWO CARDS
+ 4
+ 10
+
+WHAT IS YOUR BET? 25
+ 10
+SORRY, YOU LOSE
+YOU NOW HAVE  50  DOLLARS
+
+HERE ARE YOUR NEXT TWO CARDS
+ 8
+QUEEN
+WHAT ISW YOUR BET? 0
+CHICKEN!!
+
+HERE ARE YOUR NEXT TWO CARDS
+ 6
+ 10
+WHAT IS YOUR BET? 20
+ 10
+SORRY, YOU LOSE
+YOU NOW HAVE  30  DOLLRS
+
+HERE ARE YOUR NESXT TWO CARDS
+ 9
+JACK
+
+WHAT IS YOUR BET? 0
+CHICKEN!!
+
+HERE ARE YOUR NEXT TWO CARDS
+JACK
+QUEEN
+
+WHAT IS YOUR BET? 0
+CHICKEN!!
+
 
