@@ -1,6 +1,4 @@
-README_Acey_Ducey.txt
-
-The file aceduc1.bas is the retyped source code from the original publication.
+This is the retyped source code from the original publication.
 
 An effort has bee made to recreate the original published text complete with
 published errors.  Because this project is manually entered and processed some
